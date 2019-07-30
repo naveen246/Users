@@ -10,8 +10,8 @@ public class ApiClient {
     private static final String BASE_URL = "https://randomuser.me/api/";
 
     private static final OkHttpClient client;
-    private static WebService sInstance;
     private static final Object sLock = new Object();
+    private static WebService sInstance;
 
     static {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();

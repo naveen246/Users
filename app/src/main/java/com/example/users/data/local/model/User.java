@@ -4,7 +4,8 @@ import androidx.room.PrimaryKey;
 
 public class User {
 
-    @PrimaryKey public String id;
+    @PrimaryKey
+    public String id;
     public String firstName;
     public String lastname;
     public String email;

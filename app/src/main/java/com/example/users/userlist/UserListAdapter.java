@@ -21,6 +21,10 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
         this.users = users;
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
+
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
