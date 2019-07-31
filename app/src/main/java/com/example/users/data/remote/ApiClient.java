@@ -10,8 +10,7 @@ public class ApiClient {
     private static final String BASE_URL = "https://randomuser.me/api/";
 
     private static final OkHttpClient client;
-    private static final Object sLock = new Object();
-    private static WebService sInstance;
+    private static WebService INSTANCE;
 
     static {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -23,11 +22,11 @@ public class ApiClient {
     }
 
     public static WebService getInstance() {
-        synchronized (sLock) {
-            if (sInstance == null) {
-                sInstance = getRetrofitInstance().create(WebService.class);
+        synchronized (WebService.class) {
+            if (INSTANCE == null) {
+                INSTANCE = getRetrofitInstance().create(WebService.class);
             }
-            return sInstance;
+            return INSTANCE;
         }
     }
 

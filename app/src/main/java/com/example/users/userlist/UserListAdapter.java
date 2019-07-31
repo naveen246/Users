@@ -35,7 +35,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User user = users.get(position);
-        String name = user.firstName + " " + user.lastname;
+        String name = user.firstName + " " + user.lastName;
         holder.nameTextView.setText(name);
         holder.emailTextView.setText(user.email);
     }
