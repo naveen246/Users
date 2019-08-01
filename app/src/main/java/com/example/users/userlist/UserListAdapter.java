@@ -17,12 +17,17 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
 
     private List<User> users;
 
-    public UserListAdapter(List<User> users) {
+    UserListAdapter(List<User> users) {
         this.users = users;
     }
 
     public List<User> getUsers() {
         return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -35,9 +40,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User user = users.get(position);
-        String name = user.firstName + " " + user.lastName;
-        holder.nameTextView.setText(name);
-        holder.emailTextView.setText(user.email);
+        holder.nameTextView.setText(user.getName());
+        holder.emailTextView.setText(user.getEmail());
     }
 
     @Override
@@ -45,15 +49,15 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
         return users.size();
     }
 
-    public static class UserViewHolder extends RecyclerView.ViewHolder {
+    static class UserViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView nameTextView;
-        public TextView emailTextView;
+        TextView nameTextView;
+        TextView emailTextView;
 
-        public UserViewHolder(@NonNull View itemView) {
+        UserViewHolder(@NonNull View itemView) {
             super(itemView);
-            nameTextView = (TextView) itemView.findViewById(R.id.name);
-            emailTextView = (TextView) itemView.findViewById(R.id.email);
+            nameTextView = itemView.findViewById(R.id.name);
+            emailTextView = itemView.findViewById(R.id.email);
         }
     }
 }

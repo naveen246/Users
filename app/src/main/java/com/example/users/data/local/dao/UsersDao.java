@@ -18,5 +18,5 @@ public interface UsersDao {
     LiveData<User> getUser(int userId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertUsers(User... users);
+    void insertUsers(List<User> users);
 }
