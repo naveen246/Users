@@ -38,12 +38,12 @@ public class UsersRepository {
         List<User> users = usersDao.getUsers().getValue();
         // if users is null or empty call remote url and update db
         if (users == null || users.size() == 0 || isTimeToRefreshDb()) {
-            getUsersFromApi();
+            callApiAndSaveToDb();
         }
         return usersDao.getUsers();
     }
 
-    private void getUsersFromApi() {
+    private void callApiAndSaveToDb() {
         Call<List<Person>> call = ApiClient.webService().getUsers(userCount);
         call.enqueue(new Callback<List<Person>>() {
             @Override
