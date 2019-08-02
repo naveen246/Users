@@ -18,7 +18,7 @@ public class UsersApp extends Application {
     }
 
     public UsersRepository getRepository() {
-        return UsersRepository.getInstance(getDatabase());
+        return UsersRepository.getInstance(this);
     }
 
 }

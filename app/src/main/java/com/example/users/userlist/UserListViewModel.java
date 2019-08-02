@@ -14,9 +14,9 @@ import java.util.List;
 
 public class UserListViewModel extends AndroidViewModel {
 
+    private final MediatorLiveData<List<User>> observableUsers;
     private UsersRepository usersRepository;
     private LiveData<List<User>> users;
-    private final MediatorLiveData<List<User>> observableUsers;
 
     public UserListViewModel(Application application) {
         super(application);

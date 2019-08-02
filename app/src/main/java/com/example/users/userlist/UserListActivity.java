@@ -8,10 +8,10 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.users.utils.Constants;
 import com.example.users.R;
 import com.example.users.data.local.model.User;
 import com.example.users.userdetail.UserDetailActivity;
+import com.example.users.utils.Constants;
 import com.example.users.utils.ItemClickSupport;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class UserListActivity extends AppCompatActivity {
                     Intent intent = new Intent(UserListActivity.this, UserDetailActivity.class);
                     String userId = ((UserListAdapter) recyclerView1.getAdapter()).getUsers().get(position).getId();
                     intent.putExtra(Constants.USER_ID, userId);
-                    startActivity(intent);
+//                    startActivity(intent);
                 }
         );
 

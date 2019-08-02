@@ -1,10 +1,19 @@
 package com.example.users.data.local.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "user")
 public class User {
+
+    @PrimaryKey
+    @NonNull
+    private String id;
+    private String name;
+    private String email;
+    private int age;
+    private String gender;
 
     public User(String id, String name, String email, int age, String gender) {
         this.id = id;
@@ -13,13 +22,6 @@ public class User {
         this.age = age;
         this.gender = gender;
     }
-
-    @PrimaryKey
-    private String id;
-    private String name;
-    private String email;
-    private int age;
-    private String gender;
 
     public String getId() {
         return id;
@@ -39,5 +41,11 @@ public class User {
 
     public String getGender() {
         return gender;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return getId() + "\n" + getName() + "\n" + getEmail() + "\n" + getAge() + "\n" + getGender() + "\n";
     }
 }
