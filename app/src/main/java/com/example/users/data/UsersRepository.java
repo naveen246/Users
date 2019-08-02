@@ -3,15 +3,17 @@ package com.example.users.data;
 import androidx.lifecycle.LiveData;
 
 import com.example.users.UsersApp;
-import com.example.users.data.local.UsersDatabase;
 import com.example.users.data.local.dao.UsersDao;
 import com.example.users.data.local.model.User;
 import com.example.users.data.remote.ApiClient;
 import com.example.users.data.remote.ResponseParser;
 import com.example.users.data.remote.response.Result;
 import com.example.users.utils.AppExecutors;
+import com.example.users.utils.Constants;
+import com.example.users.utils.PreferencesManager;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,27 +21,26 @@ import retrofit2.Response;
 
 public class UsersRepository {
     private static UsersRepository INSTANCE;
+    PreferencesManager preferencesManager;
     private UsersDao usersDao;
     private int userCount = 10;
 
     private UsersRepository(UsersApp app) {
+        preferencesManager = app.getPreferencesManager();
         usersDao = app.getDatabase().usersDao();
     }
 
-    public static UsersRepository getInstance(UsersApp app) {
-        synchronized (UsersRepository.class) {
-            if (INSTANCE == null) {
-                INSTANCE = new UsersRepository(app);
-            }
-            return INSTANCE;
+    public static synchronized UsersRepository getInstance(UsersApp app) {
+        if (INSTANCE == null) {
+            INSTANCE = new UsersRepository(app);
         }
+        return INSTANCE;
     }
 
     // DB calls
 
     public LiveData<List<User>> getUsers() {
         List<User> users = usersDao.getUsers().getValue();
-        // if users is null or empty call remote url and update db
         if (users == null || users.isEmpty() || isTimeToRefreshDb()) {
             callApiAndSaveToDb();
         }
@@ -51,14 +52,15 @@ public class UsersRepository {
     }
 
     public void saveUsers(List<User> users) {
-        // store current time to shared prefs - System.currentTimeMillis()
+        preferencesManager.setLongValue(Constants.LAST_DB_UPDATE_TIME, System.currentTimeMillis());
         AppExecutors.getInstance().diskIO().execute(() -> usersDao.insertUsers(users));
     }
 
 
-
     private boolean isTimeToRefreshDb() {
-        return true;
+        long lastDbUpdateTime = preferencesManager.getLongValue(Constants.LAST_DB_UPDATE_TIME);
+        long dbRefreshTime = TimeUnit.MINUTES.toMillis(Constants.DB_REFRESH_TIME_MIN);
+        return System.currentTimeMillis() - lastDbUpdateTime > dbRefreshTime;
     }
 
     private void callApiAndSaveToDb() {

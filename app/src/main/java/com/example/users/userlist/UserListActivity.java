@@ -21,33 +21,36 @@ public class UserListActivity extends AppCompatActivity {
 
     UserListViewModel viewModel;
     UserListAdapter adapter;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userlist);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        recyclerView = findViewById(R.id.recyclerview);
 
         List<User> users = new ArrayList<>();
         adapter = new UserListAdapter(users);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(
-                (recyclerView1, position, view) -> {
-                    Intent intent = new Intent(UserListActivity.this, UserDetailActivity.class);
-                    String userId = ((UserListAdapter) recyclerView1.getAdapter()).getUsers().get(position).getId();
-                    intent.putExtra(Constants.USER_ID, userId);
-//                    startActivity(intent);
-                }
-        );
+        listenToRecyclerViewItemClick();
 
-
-        subscribeToViewModel();
+        observeViewModelData();
     }
 
-    private void subscribeToViewModel() {
+    private void listenToRecyclerViewItemClick() {
+        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(
+                (recyclerView, position, v) -> {
+                    Intent intent = new Intent(UserListActivity.this, UserDetailActivity.class);
+                    String userId = ((UserListAdapter) recyclerView.getAdapter()).getUsers().get(position).getId();
+                    intent.putExtra(Constants.USER_ID, userId);
+                    //startActivity(intent);
+                });
+    }
+
+    private void observeViewModelData() {
         viewModel = ViewModelProviders.of(this).get(UserListViewModel.class);
         viewModel.getUsers().observe(this, users -> {
             if (users != null) {

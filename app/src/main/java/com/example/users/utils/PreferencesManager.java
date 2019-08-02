@@ -5,20 +5,13 @@ import android.content.SharedPreferences;
 
 public class PreferencesManager {
 
-    private static final String PREF_NAME = "com.example.app.PREF_NAME";
-    private static final String KEY_VALUE = "com.example.app.KEY_VALUE";
+    private static final String PREF_NAME = "com.example.users.PREF_NAME";
 
     private static PreferencesManager INSTANCE;
-    private final SharedPreferences preferences;
+    private final SharedPreferences sharedPrefs;
 
     private PreferencesManager(Context context) {
-        preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-    }
-
-    public static synchronized void initializeInstance(Context context) {
-        if (INSTANCE == null) {
-            INSTANCE = new PreferencesManager(context);
-        }
+        sharedPrefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
     public static synchronized PreferencesManager getInstance(Context context) {
@@ -28,24 +21,24 @@ public class PreferencesManager {
         return INSTANCE;
     }
 
-    public void setValue(long value) {
-        preferences.edit()
-                .putLong(KEY_VALUE, value)
-                .commit();
+    public void setLongValue(String key, long value) {
+        sharedPrefs.edit()
+                .putLong(key, value)
+                .apply();
     }
 
-    public long getValue() {
-        return preferences.getLong(KEY_VALUE, 0);
+    public long getLongValue(String key) {
+        return sharedPrefs.getLong(key, 0);
     }
 
     public void remove(String key) {
-        preferences.edit()
+        sharedPrefs.edit()
                 .remove(key)
-                .commit();
+                .apply();
     }
 
     public boolean clear() {
-        return preferences.edit()
+        return sharedPrefs.edit()
                 .clear()
                 .commit();
     }

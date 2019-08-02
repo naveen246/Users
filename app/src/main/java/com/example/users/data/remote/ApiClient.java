@@ -21,13 +21,11 @@ public class ApiClient {
                 .build();
     }
 
-    public static WebService webService() {
-        synchronized (WebService.class) {
-            if (service == null) {
-                service = getRetrofitInstance().create(WebService.class);
-            }
-            return service;
+    public static synchronized WebService webService() {
+        if (service == null) {
+            service = getRetrofitInstance().create(WebService.class);
         }
+        return service;
     }
 
     private static Retrofit getRetrofitInstance() {
