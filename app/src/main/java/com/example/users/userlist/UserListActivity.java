@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,9 +36,13 @@ public class UserListActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        RecyclerView.ItemDecoration itemDecoration = new
+                DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(itemDecoration);
+
         listenToRecyclerViewItemClick();
 
-        observeViewModelData();
+        setUpViewModel();
     }
 
     private void listenToRecyclerViewItemClick() {
@@ -46,11 +51,11 @@ public class UserListActivity extends AppCompatActivity {
                     Intent intent = new Intent(UserListActivity.this, UserDetailActivity.class);
                     String userId = ((UserListAdapter) recyclerView.getAdapter()).getUsers().get(position).getId();
                     intent.putExtra(Constants.USER_ID, userId);
-                    //startActivity(intent);
+                    startActivity(intent);
                 });
     }
 
-    private void observeViewModelData() {
+    private void setUpViewModel() {
         viewModel = ViewModelProviders.of(this).get(UserListViewModel.class);
         viewModel.getUsers().observe(this, users -> {
             if (users != null) {

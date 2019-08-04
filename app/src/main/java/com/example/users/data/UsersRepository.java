@@ -47,7 +47,7 @@ public class UsersRepository {
         return usersDao.getUsers();
     }
 
-    public LiveData<User> getUser(int userId) {
+    public LiveData<User> getUser(String userId) {
         return usersDao.getUser(userId);
     }
 

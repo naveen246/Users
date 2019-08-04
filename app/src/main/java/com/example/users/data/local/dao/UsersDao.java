@@ -17,7 +17,7 @@ public interface UsersDao {
     LiveData<List<User>> getUsers();
 
     @Query("SELECT * FROM user WHERE id = :userId")
-    LiveData<User> getUser(int userId);
+    LiveData<User> getUser(String userId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertUsers(List<User> users);

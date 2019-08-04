@@ -16,15 +16,15 @@ public class UserListViewModel extends AndroidViewModel {
 
     private final MediatorLiveData<List<User>> observableUsers;
 
-    public UserListViewModel(Application application) {
-        super(application);
+    public UserListViewModel(Application app) {
+        super(app);
 
         observableUsers = new MediatorLiveData<>();
 
-        UsersRepository usersRepository = ((UsersApp) application).getRepository();
+        UsersRepository repository = ((UsersApp) app).getRepository();
 
         // observe the changes of the products from the database and forward them
-        observableUsers.addSource(usersRepository.getUsers(), observableUsers::setValue);
+        observableUsers.addSource(repository.getUsers(), observableUsers::setValue);
     }
 
     LiveData<List<User>> getUsers() {
