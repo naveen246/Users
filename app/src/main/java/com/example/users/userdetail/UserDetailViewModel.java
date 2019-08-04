@@ -9,7 +9,7 @@ import com.example.users.UsersApp;
 import com.example.users.data.UsersRepository;
 import com.example.users.data.local.model.User;
 
-class UserDetailViewModel extends AndroidViewModel {
+public class UserDetailViewModel extends AndroidViewModel {
 
     private UsersRepository repository;
 
