@@ -12,6 +12,7 @@ import com.example.users.utils.Constants;
 
 public class UserDetailActivity extends AppCompatActivity {
 
+    private static final String TAG = UserDetailActivity.class.getName();
     private UserDetailViewModel viewModel;
     private TextView userDetails;
 
@@ -26,18 +27,11 @@ public class UserDetailActivity extends AppCompatActivity {
 
         viewModel = ViewModelProviders.of(this).get(UserDetailViewModel.class);
 
-        if (savedInstanceState != null) {
-            String id = savedInstanceState.getString(Constants.USER_ID);
-            viewModel.getUser(id).observe(this, this::setUserDetails);
-        }
+        String id = getIntent().getStringExtra(Constants.USER_ID);
+        viewModel.getUser(id).observe(this, this::setUserDetails);
     }
 
     private void setUserDetails(User user) {
-        String newLine = System.getProperty("line.separator");
-        String userData = user.getName() + newLine +
-                user.getEmail() + newLine +
-                user.getAge() + newLine +
-                user.getGender();
-        userDetails.setText(userData);
+        userDetails.setText(user.toString());
     }
 }

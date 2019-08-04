@@ -46,6 +46,6 @@ public class User {
     @NonNull
     @Override
     public String toString() {
-        return getId() + "\n" + getName() + "\n" + getEmail() + "\n" + getAge() + "\n" + getGender() + "\n";
+        return getId() + "\n\n" + getName() + "\n\n" + getEmail() + "\n\n" + getAge() + "\n\n" + getGender() + "\n";
     }
 }

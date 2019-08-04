@@ -2,6 +2,7 @@ package com.example.users.userlist;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -20,6 +21,7 @@ import java.util.List;
 
 public class UserListActivity extends AppCompatActivity {
 
+    private static final String TAG = UserListActivity.class.getName();
     private UserListViewModel viewModel;
     private UserListAdapter adapter;
     private RecyclerView recyclerView;
@@ -50,6 +52,7 @@ public class UserListActivity extends AppCompatActivity {
                 (recyclerView, position, v) -> {
                     Intent intent = new Intent(UserListActivity.this, UserDetailActivity.class);
                     String userId = ((UserListAdapter) recyclerView.getAdapter()).getUsers().get(position).getId();
+                    Log.d(TAG, userId);
                     intent.putExtra(Constants.USER_ID, userId);
                     startActivity(intent);
                 });
