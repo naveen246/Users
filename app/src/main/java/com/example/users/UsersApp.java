@@ -8,11 +8,6 @@ import com.example.users.utils.PreferencesManager;
 
 public class UsersApp extends Application {
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-    }
-
     public UsersDatabase getDatabase() {
         return UsersDatabase.getInstance(this);
     }

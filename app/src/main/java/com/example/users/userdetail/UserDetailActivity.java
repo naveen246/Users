@@ -12,8 +12,8 @@ import com.example.users.utils.Constants;
 
 public class UserDetailActivity extends AppCompatActivity {
 
-    UserDetailViewModel viewModel;
-    TextView userDetails;
+    private UserDetailViewModel viewModel;
+    private TextView userDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

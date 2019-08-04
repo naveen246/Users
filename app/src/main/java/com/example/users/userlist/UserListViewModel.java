@@ -12,7 +12,7 @@ import com.example.users.data.local.model.User;
 
 import java.util.List;
 
-public class UserListViewModel extends AndroidViewModel {
+class UserListViewModel extends AndroidViewModel {
 
     private final MediatorLiveData<List<User>> observableUsers;
 

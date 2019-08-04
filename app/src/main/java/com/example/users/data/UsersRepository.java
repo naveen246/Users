@@ -21,7 +21,7 @@ import retrofit2.Response;
 
 public class UsersRepository {
     private static UsersRepository INSTANCE;
-    PreferencesManager preferencesManager;
+    private PreferencesManager preferencesManager;
     private UsersDao usersDao;
     private int userCount = 10;
 
@@ -51,7 +51,7 @@ public class UsersRepository {
         return usersDao.getUser(userId);
     }
 
-    public void saveUsers(List<User> users) {
+    private void saveUsers(List<User> users) {
         preferencesManager.setLongValue(Constants.LAST_DB_UPDATE_TIME, System.currentTimeMillis());
         AppExecutors.getInstance().diskIO().execute(() -> usersDao.insertUsers(users));
     }

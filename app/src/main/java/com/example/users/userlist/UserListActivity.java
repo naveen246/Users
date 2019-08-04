@@ -20,9 +20,9 @@ import java.util.List;
 
 public class UserListActivity extends AppCompatActivity {
 
-    UserListViewModel viewModel;
-    UserListAdapter adapter;
-    RecyclerView recyclerView;
+    private UserListViewModel viewModel;
+    private UserListAdapter adapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

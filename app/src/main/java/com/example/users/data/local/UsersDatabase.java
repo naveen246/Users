@@ -12,7 +12,7 @@ import com.example.users.data.local.model.User;
 @Database(entities = {User.class}, version = 1)
 public abstract class UsersDatabase extends RoomDatabase {
 
-    public static final String DATABASE_NAME = "users-db";
+    private static final String DATABASE_NAME = "users-db";
     private static UsersDatabase INSTANCE;
 
     public static synchronized UsersDatabase getInstance(final Context context) {
