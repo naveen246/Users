@@ -12,26 +12,24 @@ import com.example.users.utils.Constants;
 
 public class UserDetailActivity extends AppCompatActivity {
 
-    private static final String TAG = UserDetailActivity.class.getName();
     private UserDetailViewModel viewModel;
-    private TextView userDetails;
+    private TextView userDetailsTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userdetail);
 
-        userDetails = findViewById(R.id.userdetails);
+        userDetailsTextView = findViewById(R.id.userdetails);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        viewModel = ViewModelProviders.of(this).get(UserDetailViewModel.class);
-
         String id = getIntent().getStringExtra(Constants.USER_ID);
+        viewModel = ViewModelProviders.of(this).get(UserDetailViewModel.class);
         viewModel.getUser(id).observe(this, this::setUserDetails);
     }
 
     private void setUserDetails(User user) {
-        userDetails.setText(user.toString());
+        userDetailsTextView.setText(user.toString());
     }
 }

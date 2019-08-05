@@ -26,6 +26,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
     }
 
     public void setUsers(List<User> users) {
+        if (users == null) return;
         this.users = users;
         notifyDataSetChanged();
     }

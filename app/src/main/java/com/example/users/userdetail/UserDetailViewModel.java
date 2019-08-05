@@ -15,7 +15,6 @@ public class UserDetailViewModel extends AndroidViewModel {
 
     public UserDetailViewModel(Application app) {
         super(app);
-
         repository = ((UsersApp) app).getRepository();
     }
 
