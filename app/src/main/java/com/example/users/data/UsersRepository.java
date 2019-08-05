@@ -68,6 +68,7 @@ public class UsersRepository {
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
+                if (response.body() == null) return;
                 List<User> users = ResponseParser.parse(response.body());
                 saveUsers(users);
             }

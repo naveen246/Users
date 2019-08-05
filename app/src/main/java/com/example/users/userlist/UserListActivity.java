@@ -15,8 +15,6 @@ import com.example.users.userdetail.UserDetailActivity;
 import com.example.users.utils.Constants;
 import com.example.users.utils.ItemClickSupport;
 
-import java.util.ArrayList;
-
 public class UserListActivity extends AppCompatActivity {
 
     private static final String TAG = UserListActivity.class.getName();
@@ -37,7 +35,7 @@ public class UserListActivity extends AppCompatActivity {
     }
 
     private void setUpRecyclerView() {
-        adapter = new UserListAdapter(new ArrayList<>());
+        adapter = new UserListAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

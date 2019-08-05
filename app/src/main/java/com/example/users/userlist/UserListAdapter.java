@@ -11,15 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.users.R;
 import com.example.users.data.local.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserViewHolder> {
 
-    private List<User> users;
-
-    UserListAdapter(List<User> users) {
-        this.users = users;
-    }
+    private List<User> users = new ArrayList<>();
 
     public List<User> getUsers() {
         return users;

@@ -22,7 +22,7 @@ public class UserDetailActivity extends AppCompatActivity {
 
         userDetailsTextView = findViewById(R.id.userdetails);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         String id = getIntent().getStringExtra(Constants.USER_ID);
         viewModel = ViewModelProviders.of(this).get(UserDetailViewModel.class);
