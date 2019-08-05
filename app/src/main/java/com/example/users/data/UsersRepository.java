@@ -42,7 +42,7 @@ public class UsersRepository {
     public LiveData<List<User>> getUsers() {
         List<User> users = usersDao.getUsers().getValue();
         if (users == null || users.isEmpty() || isTimeToRefreshDb()) {
-            callApiAndSaveToDb();
+            callApiAndSaveResultToDb();
         }
         return usersDao.getUsers();
     }
@@ -52,18 +52,17 @@ public class UsersRepository {
     }
 
     private void saveUsers(List<User> users) {
-        preferencesManager.setLongValue(Constants.LAST_DB_UPDATE_TIME, System.currentTimeMillis());
+        saveCurrentTimeAsDbUpdateTime();
         AppExecutors.getInstance().diskIO().execute(() -> usersDao.insertUsers(users));
     }
 
 
     private boolean isTimeToRefreshDb() {
-        long lastDbUpdateTime = preferencesManager.getLongValue(Constants.LAST_DB_UPDATE_TIME);
-        long dbRefreshTime = TimeUnit.MINUTES.toMillis(Constants.DB_REFRESH_TIME_MIN);
-        return System.currentTimeMillis() - lastDbUpdateTime > dbRefreshTime;
+        long dbRefreshInterval = TimeUnit.MINUTES.toMillis(Constants.DB_REFRESH_INTERVAL_MIN);
+        return (System.currentTimeMillis() - getLastDbUpdateTime()) > dbRefreshInterval;
     }
 
-    private void callApiAndSaveToDb() {
+    private void callApiAndSaveResultToDb() {
         Call<Result> call = ApiClient.webService().getUsers(userCount);
         call.enqueue(new Callback<Result>() {
             @Override
@@ -80,5 +79,11 @@ public class UsersRepository {
         });
     }
 
+    private void saveCurrentTimeAsDbUpdateTime() {
+        preferencesManager.setLongValue(Constants.LAST_DB_UPDATE_TIME, System.currentTimeMillis());
+    }
 
+    private long getLastDbUpdateTime() {
+        return preferencesManager.getLongValue(Constants.LAST_DB_UPDATE_TIME);
+    }
 }
