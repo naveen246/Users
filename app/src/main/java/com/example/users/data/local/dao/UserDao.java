@@ -11,7 +11,7 @@ import com.example.users.data.local.model.User;
 import java.util.List;
 
 @Dao
-public interface UsersDao {
+public interface UserDao {
 
     @Query("SELECT * FROM user")
     LiveData<List<User>> getUsers();

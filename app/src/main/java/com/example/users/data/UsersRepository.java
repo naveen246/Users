@@ -3,7 +3,7 @@ package com.example.users.data;
 import androidx.lifecycle.LiveData;
 
 import com.example.users.UsersApp;
-import com.example.users.data.local.dao.UsersDao;
+import com.example.users.data.local.dao.UserDao;
 import com.example.users.data.local.model.User;
 import com.example.users.data.remote.ApiClient;
 import com.example.users.data.remote.ResponseParser;
@@ -22,12 +22,12 @@ import retrofit2.Response;
 public class UsersRepository {
     private static UsersRepository INSTANCE;
     private PreferencesManager preferencesManager;
-    private UsersDao usersDao;
+    private UserDao userDao;
     private int userCount = 10;
 
     private UsersRepository(UsersApp app) {
         preferencesManager = app.getPreferencesManager();
-        usersDao = app.getDatabase().usersDao();
+        userDao = app.getDatabase().userDao();
     }
 
     public static synchronized UsersRepository getInstance(UsersApp app) {
@@ -40,20 +40,20 @@ public class UsersRepository {
     // DB calls
 
     public LiveData<List<User>> getUsers() {
-        List<User> users = usersDao.getUsers().getValue();
+        List<User> users = userDao.getUsers().getValue();
         if (users == null || users.isEmpty() || isTimeToRefreshDb()) {
             callApiAndSaveResultToDb();
         }
-        return usersDao.getUsers();
+        return userDao.getUsers();
     }
 
     public LiveData<User> getUser(String userId) {
-        return usersDao.getUser(userId);
+        return userDao.getUser(userId);
     }
 
     private void saveUsers(List<User> users) {
         saveCurrentTimeAsDbUpdateTime();
-        AppExecutors.getInstance().diskIO().execute(() -> usersDao.insertUsers(users));
+        AppExecutors.getInstance().diskIO().execute(() -> userDao.insertUsers(users));
     }
 
 
